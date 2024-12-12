@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Asteroid Dodger</title>
+
+<body>
+	<canvas width="900" height="700" id="myCanvas" style="border: 2px solid #000000;"></canvas>
+	<script type="text/javascript">
+
+
+		var canvas = document.getElementById('myCanvas');
+		var ctx = canvas.getContext('2d');
+	
+
+		var shipXpos = 150; 
+		var shipYpos = 275;
+		var ship = new Image();
+		ship.src = "assets/ship.png";
+		ship.onload = function(){
+			checkLd();
+		}
+
+		var bgXpos = 0;
+		var bg2Xpos = 900;
+
+		var bg2 = new Image();
+		bg2.src = "assets/bg2.png";
+		bg2.onload = function(){
+			checkLd();
+		}
+		var bg = new Image();
+		bg.src = "assets/bg.png";
+		bg.onload = function(){
+			checkLd();
+		}
+
+		var mtr = new Image();
+		mtr.src = "assets/mtr.png";
+		mtr.onload = function(){
+			checkLd();
+		}
+
+		var mtr2 = new Image();
+		mtr2.src = "assets/mtr.png";
+		mtr2.onload = function(){
+			checkLd();
+		}
+
+		var dedIMG = new Image();
+		dedIMG.src = "assets/death.png";
+		dedIMG.onload = function(){
+			checkLd();
+		}
+
+		var imgLdd = 0;
+		function checkLd(){
+			imgLdd ++;
+			if(imgLdd == 6){
+				anim();
+			}
+		}
+
+// start of metiors
+
+	var mtrXpos = 900;
+
+	var mtrYpos = 0;
+
+// end of metiors
+
+// ship hit box \\
+/*
+	var shipHBx = 150
+
+	var shipHBy = shipYpos
+ */
+// ship hit box \\
+
+
+		var pd = 0;	
+
+		var skr = 0;
+
+		var ded = 0;
+
+		var shipSizeX = 204
+
+		var shipSizeY = 132
+
+		var AsteriodSizeX = 250
+
+		var AsteriodSizeY = 250
+
+
+
+		canvas.addEventListener('pointerdown',downFunc,false);
+		function downFunc(event){
+			pd = 1;
+		}
+
+		canvas.addEventListener('pointerup',upFunc,false);
+		function upFunc(event){
+			pd = 0;
+		}
+
+		function update(){
+
+			/* code for moving parts: "bg2Xpos -=5;
+			 if(bg2Xpos <= -900){
+				bg2Xpos = 900;
+			}
+			*/
+
+			skr += 1;
+
+			if(pd == 1){
+				shipYpos -= 10;
+			} else{
+				shipYpos += 8;
+			}
+
+			bgXpos -=10;
+			if(bgXpos <= -900){
+				bgXpos = 900;
+			}
+
+			bg2Xpos -=10;
+			if(bg2Xpos <= -900){
+				bg2Xpos = 900;
+			}
+
+			mtrXpos -=10;
+				if(mtrXpos <= -900){
+				mtrXpos = 900 + Math.random()*500;
+				mtrYpos = Math.random()*450;
+
+			}
+				
+			if(shipYpos > 575){
+				shipYpos = 575;
+			}
+
+			if(shipYpos < 0){
+				shipYpos = 0;
+			}
+
+
+					var ShipHB = (shipXpos / shipYpos);
+
+		var AsteriodHB = (mtrYpos - myp);
+
+		var mYp = (mtrYpos - 250)
+
+
+
+
+			if(ShipHB >= AsteriodHB){
+				ded = 1;
+			}
+
+		}
+
+		function draw(){
+			ctx.drawImage(bg,bgXpos,0);
+			ctx.drawImage(bg2,bg2Xpos,0);
+
+			ctx.drawImage(mtr,mtrXpos,mtrYpos);
+
+			ctx.drawImage(ship,150,shipYpos);
+			ctx.fillStyle = "#ffffff";
+			ctx.font = "35px Impact";
+
+			ctx.fillText(skr,35,35);
+			
+			
+			
+						if(ded == 1){
+				ctx.drawImage(dedIMG,0,0);
+			}
+
+		}
+
+		function anim(){
+			update();
+			draw();
+			window.requestAnimationFrame(anim);
+		}
+
+	</script>
+
+
+<body>
